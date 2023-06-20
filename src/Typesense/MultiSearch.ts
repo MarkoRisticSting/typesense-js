@@ -10,6 +10,10 @@ export interface MultiSearchRequestSchema extends SearchParams {
   'x-typesense-api-key'?: string
 }
 
+export interface CommonParamsRequest extends MultiSearchRequestSchema {
+  limit_multi_searches?: number
+}
+
 export interface MultiSearchRequestWithPresetSchema extends SearchParamsWithPreset {
   collection?: string
   'x-typesense-api-key'?: string
@@ -44,7 +48,7 @@ export default class MultiSearch {
     {
       cacheSearchResultsForSeconds = this.configuration.cacheSearchResultsForSeconds
     }: { cacheSearchResultsForSeconds?: number } = {}
-  ): Promise<MultiSearchResponse<T>> {
+  ): Promise<CommonParamsRequest<T>> {
     let additionalHeaders = {}
     if (this.useTextContentType) {
       additionalHeaders['content-type'] = 'text/plain'
